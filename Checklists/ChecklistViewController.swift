@@ -36,10 +36,7 @@ class ChecklistViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // listChecklistItem.append(ChecklistItem(text: "How about beets?"))
-       // listChecklistItem.append(ChecklistItem(text: "How about beats?",checked:true))
-       // listChecklistItem.append(ChecklistItem(text: "How about bits?"))
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
 
  }
 
