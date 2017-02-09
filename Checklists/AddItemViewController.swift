@@ -1,5 +1,5 @@
 //
-//  AddItemViewController.swift
+//  ItemDetailViewController.swift
 //  Checklists
 //
 //  Created by iem on 02/02/2017.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddItemViewController: UITableViewController , UITextFieldDelegate{
+class ItemDetailViewController: UITableViewController , UITextFieldDelegate{
    
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var Cancel: UIBarButtonItem!
@@ -16,18 +16,18 @@ class AddItemViewController: UITableViewController , UITextFieldDelegate{
     var editItem : ChecklistItem?
     
     
-    weak var delegate:AddItemViewControllerDelegate?
+    weak var delegate:ItemDetailViewControllerDelegate?
     @IBAction func btnCancel() {
-        delegate?.addItemViewControllerDidCancel(controller: self)
+        delegate?.itemDetailViewControllerDidCancel(controller: self)
     }
     @IBAction func btnDone() {
         if(editItem?.text != nil)
         {
-            editItem?.text = textField.text!
-            delegate?.addItemViewController(controller: self, didFinishEditingItem: editItem!);
+                        editItem?.text = textField.text!
+            delegate?.itemDetailViewController(controller: self, didFinishEditingItem: editItem!);
         }
         else{
-            delegate?.addItemViewController(controller: self,didFinishAddingItem: ChecklistItem(text : "test"))
+            delegate?.itemDetailViewController(controller: self,didFinishAddingItem: ChecklistItem(text : "test"))
         }
         print(textField.text)
     }
@@ -38,6 +38,15 @@ class AddItemViewController: UITableViewController , UITextFieldDelegate{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(editItem?.text != nil)
+        {
+            self.navigationItem.title = "Edit Text"
+        }
+        else
+        {
+            self.navigationItem.title  = "Add Text"
+
+        }
         textField.text = editItem?.text
     }
     
@@ -60,10 +69,10 @@ class AddItemViewController: UITableViewController , UITextFieldDelegate{
     }
 }
 
-protocol AddItemViewControllerDelegate : class {
+protocol ItemDetailViewControllerDelegate : class {
     
-    func addItemViewControllerDidCancel(controller: AddItemViewController)
-    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: ChecklistItem)
-    func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: ChecklistItem);
+    func itemDetailViewControllerDidCancel(controller: ItemDetailViewController)
+    func itemDetailViewController(controller: ItemDetailViewController, didFinishAddingItem item: ChecklistItem)
+    func itemDetailViewController(controller: ItemDetailViewController, didFinishEditingItem item: ChecklistItem);
 
 }
