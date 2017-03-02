@@ -10,14 +10,13 @@ import UIKit
 
 class ChecklistViewController: UITableViewController{
     
-
+    var list: Checklist!
     var listChecklistItem = [ChecklistItem]()
 
     @IBAction func addDummyTodo(_ sender: AnyObject) {
         
         listChecklistItem.append(ChecklistItem(text: "add test", checked: false))
         tableView.insertRows(at: [IndexPath(item: listChecklistItem.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
-
     }
     
    
@@ -36,7 +35,8 @@ class ChecklistViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+       // navigationItem.title = list.name
 
  }
 
