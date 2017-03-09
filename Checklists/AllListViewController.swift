@@ -85,15 +85,57 @@ class AllListViewController: UITableViewController {
         cell.textLabel?.text = item.name
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*
+        
         if segue.identifier == "showList"{
             
-            let controller = segue.destination as! ChecklistViewController
-            controller.list = sender as! Checklist
-            
-        }
-        */
+            let checklist  = segue.destination as! ChecklistViewController;
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                checklist.list = checkLists[indexPath.row]
+                }
+            }
+            else if segue.identifier == "AddListItem" {
+                let nav = segue.destination as? UINavigationController
+                let destination = nav?.topViewController as? ListDetailViewController
+                destination?.delegate = self
+            }
+            else if segue.identifier == "EditListItem"{
+                let nav = segue.destination as? UINavigationController
+                let destination = nav?.topViewController as? ListDetailViewController
+                let cell = sender as! UITableViewCell
+                let i = tableView.indexPath(for: cell)?.row
+                
+                destination?.editItem = checkLists[i!]
+                destination?.delegate = self
+                
+            }
+
+        
+        
     }
 
   
 }
+//MARK: - ListDetailViewControllerDelegate
+extension AllListViewController : ListDetailViewControllerDelegate
+{
+    func listDetailViewControllerDidCancel(controller:ListDetailViewController){
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func  listDetailViewController(controller: ListDetailViewController, didFinishAddingItem item: Checklist){
+        checkLists.append(Checklist(name : controller.textField.text!))
+        tableView.insertRows(at: [IndexPath(item: checkLists.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
+        controller.dismiss(animated: true, completion: nil)
+    }
+    func listDetailViewController(controller: ListDetailViewController, didFinishEditingItem item: Checklist){
+        let i =  checkLists.index(where:{$0 === item})
+        checkLists[i!] = item
+        
+        tableView.reloadRows(at: [IndexPath(row : i!,section  : 0)], with: UITableViewRowAnimation.automatic)
+        controller.dismiss(animated: true, completion: nil)
+        
+    }
+    
+}
+
+

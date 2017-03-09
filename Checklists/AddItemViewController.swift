@@ -23,13 +23,12 @@ class ItemDetailViewController: UITableViewController , UITextFieldDelegate{
     @IBAction func btnDone() {
         if(editItem?.text != nil)
         {
-                        editItem?.text = textField.text!
+            editItem?.text = textField.text!
             delegate?.itemDetailViewController(controller: self, didFinishEditingItem: editItem!);
         }
         else{
             delegate?.itemDetailViewController(controller: self,didFinishAddingItem: ChecklistItem(text : "test"))
         }
-        print(textField.text)
     }
     override func viewWillAppear(_ animated: Bool) {
         textField.text = editItem?.text
@@ -45,7 +44,6 @@ class ItemDetailViewController: UITableViewController , UITextFieldDelegate{
         else
         {
             self.navigationItem.title  = "Add Text"
-
         }
         textField.text = editItem?.text
     }

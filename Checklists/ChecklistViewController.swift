@@ -25,6 +25,7 @@ class ChecklistViewController: UITableViewController{
         super.init(coder: aDecoder)
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: dataFileUrl().path) {
+            //listChecklistItem = list.items
             loadChecklistItems()
         } else {
         }
@@ -36,8 +37,9 @@ class ChecklistViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
-       // navigationItem.title = list.name
-
+        if let checklist = self.list {
+            title = checklist.name
+        }
  }
 
         func documentDirectory() -> URL {
@@ -86,6 +88,7 @@ class ChecklistViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete {
             listChecklistItem.remove(at: indexPath.row)
+            saveChecklistItems()
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableViewRowAnimation.automatic)
         }
     }
